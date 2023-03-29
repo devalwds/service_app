@@ -1,11 +1,29 @@
 services:
   database:
-#    image: postgres:14.6-alpine
-    image: postgres
+    container_name: postgresql
+    image: postgres:15
+    restart: always
     environment:
       - POSTGRES_DB=dbname
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+#  pgadmin:
+#    container_name: pgadmin4
+#    image: dpage/pgadmin4:6.21
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: no-reply@eternal.com
+#      PGADMIN_DEFAULT_PASSWORD: 8p5JSNU7YsmewPm8
+#      PGADMIN_LISTEN_PORT: 80
+#    ports:
+#      - "8088:80"
+#    volumes:
+#      - pgadmin-data:/var/lib/pgadmin
+#    links:
+#      - "database:pgsql-server"
 
   web-app:
     build:
@@ -23,3 +41,7 @@ services:
       sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     depends_on:
       - database
+
+volumes:
+  pgdata:
+#  pgadmin-data:

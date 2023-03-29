@@ -12,5 +12,5 @@ RUN pip install -r /temp/requirements.txt
 
 #
 #RUN adduser --disabled-password service-user
-# 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
+# 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
 #USER service-user
